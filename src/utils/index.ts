@@ -18,11 +18,12 @@ export const cleanObject = (object: any) => {
 export const useMount = (callback: Function) => {
   useEffect(() => {
     callback();
+    // eslint-disable-next-line
   }, []);
 };
 
 // create custom debounce hook
-export const useDebounce = (value: any, delay: number) => {
+export const useDebounce = <T>(value: T, delay?: number): T => {
   const [debounceValue, setDebounceValue] = useState(value);
 
   useEffect(() => {
