@@ -1,11 +1,9 @@
 // identify the falsy value
 import { useEffect, useState } from "react";
-import { set } from "husky/lib";
-
-export const isFalsy = (value) => (value === 0 ? false : !value);
+export const isFalsy = (value: any) => (value === 0 ? false : !value);
 
 // clean the useless value of object
-export const cleanObject = (object) => {
+export const cleanObject = (object: any) => {
   const result = { ...object };
   Object.keys(result).forEach((key) => {
     const value = result[key];
@@ -17,14 +15,14 @@ export const cleanObject = (object) => {
 };
 
 // create custom mounted hook
-export const useMount = (callback) => {
+export const useMount = (callback: Function) => {
   useEffect(() => {
     callback();
   }, []);
 };
 
 // create custom debounce hook
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value: any, delay: number) => {
   const [debounceValue, setDebounceValue] = useState(value);
 
   useEffect(() => {
