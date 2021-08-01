@@ -1,5 +1,5 @@
-import { IUser } from "./src/screens/project-list/search";
-import { ILogin } from "./src/screens/login";
+import { IUser } from "./screens/project-list/search";
+import { ILogin } from "./screens/login";
 
 const localStorageKey = "__auth_provider_token__";
 const apiUrl = process.env["REACT_APP_API_URL"];
@@ -14,27 +14,32 @@ export const handleResponse = ({ user }: { user: IUser }) => {
 };
 
 export const login = (data: ILogin) => {
-  fetch(`${apiUrl}/login`, {
+  return fetch(`${apiUrl}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   }).then(async (response) => {
     if (response.ok) {
       return handleResponse(await response.json());
+    } else {
+      return Promise.reject(data);
     }
   });
 };
 
 export const register = (data: ILogin) => {
-  fetch(`${apiUrl}/register`, {
+  return fetch(`${apiUrl}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   }).then(async (response) => {
     if (response.ok) {
       return handleResponse(await response.json());
+    } else {
+      return Promise.reject(data);
     }
   });
 };
 
-export const logout = () => window.localStorage.removeItem(localStorageKey);
+export const logout = async () =>
+  window.localStorage.removeItem(localStorageKey);
