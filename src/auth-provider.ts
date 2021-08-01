@@ -4,8 +4,8 @@ import { ILogin } from "./screens/login";
 const localStorageKey = "__auth_provider_token__";
 const apiUrl = process.env["REACT_APP_API_URL"];
 
-export const getToken = () => {
-  window.localStorage.getItem(localStorageKey);
+export const getToken = (): string | undefined => {
+  return window.localStorage.getItem(localStorageKey) || "";
 };
 
 export const handleResponse = ({ user }: { user: IUser }) => {
