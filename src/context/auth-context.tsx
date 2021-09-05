@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = (form: ILogin) => auth.login(form).then(setUser);
 
-  const register = (form: ILogin) => auth.login(form).then(setUser);
+  const register = (form: ILogin) => auth.register(form).then(setUser);
 
   const logout = () => auth.logout().then(() => setUser(null));
 
