@@ -3,16 +3,17 @@ import ReactDOM from "react-dom";
 // import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { loadDevTools } from "jira-dev-tool/dist";
+import { DevTools, loadServer } from "jira-dev-tool/dist";
 import "antd/dist/antd.less";
-import { AuthProvider } from "./context/auth-context";
+import { AppProvider } from "./context";
 
-loadDevTools(() => {
+loadServer(() => {
   ReactDOM.render(
     <React.StrictMode>
-      <AuthProvider>
+      <AppProvider>
+        <DevTools />
         <App />
-      </AuthProvider>
+      </AppProvider>
     </React.StrictMode>,
     document.getElementById("root")
   );

@@ -1,13 +1,17 @@
 // identify the falsy value
 import { useEffect, useState } from "react";
-export const isFalsy = (value: any) => (value === 0 ? false : !value);
+
+export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
+
+export const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === "";
 
 // clean the useless value of object
-export const cleanObject = (object: any) => {
+export const cleanObject = (object: { [key: string]: any }) => {
   const result = { ...object };
   Object.keys(result).forEach((key) => {
     const value = result[key];
-    if (isFalsy(value)) {
+    if (isVoid(value)) {
       delete result[key];
     }
   });
@@ -18,6 +22,7 @@ export const cleanObject = (object: any) => {
 export const useMount = (callback: Function) => {
   useEffect(() => {
     callback();
+    // Todo
     // eslint-disable-next-line
   }, []);
 };
