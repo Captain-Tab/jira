@@ -1,9 +1,11 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import * as auth from "auth-provider";
 import { ILogin } from "../screens/login";
 import { IUser } from "../screens/project-list/search";
 import { http } from "../utils/http";
 import { useMount } from "../utils";
+import { useAsync } from "../utils/useAsync";
+import { FullPageError, FullPageLoading } from "../components/lib";
 
 const bootstrapUser = async () => {
   let user = null;
@@ -28,17 +30,31 @@ const AuthContext = React.createContext<
 AuthContext.displayName = "AuthContext";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const {
+    data: user,
+    error,
+    isLoading,
+    isIdle,
+    isError,
+    run,
+    setData: setUser,
+  } = useAsync<IUser | null>();
 
   const login = (form: ILogin) => auth.login(form).then(setUser);
-
   const register = (form: ILogin) => auth.register(form).then(setUser);
-
   const logout = () => auth.logout().then(() => setUser(null));
 
   useMount(() => {
-    bootstrapUser().then(setUser);
+    run(bootstrapUser());
   });
+
+  if (isIdle || isLoading) {
+    return <FullPageLoading />;
+  }
+
+  if (isError) {
+    return <FullPageError error={error} />;
+  }
 
   return (
     <AuthContext.Provider
