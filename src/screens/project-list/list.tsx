@@ -1,6 +1,6 @@
 import React from "react";
 import { IUser } from "./search";
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 
 interface IProject {
@@ -12,12 +12,11 @@ interface IProject {
   created: number;
 }
 
-interface IList {
-  list: IProject[];
+interface IListProps extends TableProps<IProject> {
   users: IUser[];
 }
 
-export const List = ({ list, users }: IList) => {
+export const List = ({ users, ...props }: IListProps) => {
   return (
     <Table
       rowKey={"id"}
@@ -57,7 +56,7 @@ export const List = ({ list, users }: IList) => {
           },
         },
       ]}
-      dataSource={list}
+      {...props}
     />
   );
 };
