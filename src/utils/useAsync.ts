@@ -6,13 +6,21 @@ interface State<D> {
   state: "idle" | "loading" | "error" | "success";
 }
 
+const defaultConfig = {
+  throwOnError: false,
+};
+
 const defaultState: State<null> = {
   state: "idle",
   data: null,
   error: null,
 };
 
-export const useAsync = <D>(initialState?: State<D>) => {
+export const useAsync = <D>(
+  initialState?: State<D>,
+  initialConfig?: typeof defaultConfig
+) => {
+  const config = { ...defaultConfig, initialConfig };
   const [state, setState] = useState<State<D>>({
     ...defaultState,
     ...initialState,
@@ -47,6 +55,7 @@ export const useAsync = <D>(initialState?: State<D>) => {
       })
       .catch((error) => {
         setError(error);
+        if (config.throwOnError) return Promise.reject(error);
         return error;
       });
   };
