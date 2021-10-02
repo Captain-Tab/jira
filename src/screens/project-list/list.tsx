@@ -3,7 +3,7 @@ import { IUser } from "./search";
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 
-interface IProject {
+export interface IProject {
   id: string;
   name: string;
   personId: string;
