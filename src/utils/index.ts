@@ -38,3 +38,21 @@ export const useDebounce = <T>(value: T, delay?: number): T => {
 
   return debounceValue;
 };
+
+export const useDocumentTitle = (title: string, keepOnMount = true) => {
+  const oldTitle = document.title;
+  console.log("oldTitle", oldTitle);
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  useEffect(() => {
+    return () => {
+      if (!keepOnMount) {
+        document.title = oldTitle;
+      }
+    };
+    // eslint-disable-next-line
+  }, []);
+};
