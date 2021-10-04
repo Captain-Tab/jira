@@ -1,5 +1,5 @@
 // identify the falsy value
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 
@@ -40,13 +40,15 @@ export const useDebounce = <T>(value: T, delay?: number): T => {
 };
 
 export const useDocumentTitle = (title: string, keepOnMount = true) => {
-  const oldTitle = document.title;
-  console.log("oldTitle", oldTitle);
+  // the title is 'React App' when the page is loading
+  const oldTitle = useRef(document.title).current;
 
+  // the title is new title after the pages was loaded
   useEffect(() => {
     document.title = title;
   }, [title]);
 
+  // set title back to 'React App'
   useEffect(() => {
     return () => {
       if (!keepOnMount) {
@@ -54,5 +56,5 @@ export const useDocumentTitle = (title: string, keepOnMount = true) => {
       }
     };
     // eslint-disable-next-line
-  }, []);
+  }, [keepOnMount, oldTitle]);
 };
