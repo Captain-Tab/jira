@@ -1,5 +1,5 @@
 import React from "react";
-import { ProjectListScreen } from "./screens/project-list";
+import { ProjectListScreen } from "screens/project-list/";
 import { useAuth } from "./context/auth-context";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import styled from "@emotion/styled";
