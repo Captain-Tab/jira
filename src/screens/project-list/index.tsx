@@ -13,7 +13,8 @@ export const ProjectListScreen = () => {
     name: "",
     personId: "",
   });
-  const param = useUrlQueryParam(["name", "personId"]);
+  const [keys] = useState<("name" | "personId")[]>(["name", "personId"]);
+  const [param] = useUrlQueryParam(keys);
   const debounceParam = useDebounce(param, 200);
   const { isLoading, error, data: list } = useProjects(debounceParam);
   const { data: users } = useUsers();
@@ -31,6 +32,8 @@ export const ProjectListScreen = () => {
     </Container>
   );
 };
+
+ProjectListScreen.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;
