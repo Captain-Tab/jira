@@ -58,3 +58,5 @@ export const useDocumentTitle = (title: string, keepOnMount = true) => {
     // eslint-disable-next-line
   }, [keepOnMount, oldTitle]);
 };
+
+export const restRoute = () => (window.location.href = window.location.origin);
