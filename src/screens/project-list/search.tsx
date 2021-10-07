@@ -1,8 +1,10 @@
 import React from "react";
-import { Input, Select, Form } from "antd";
+import { Input, Form } from "antd";
+import { IProject } from "./list";
+import { UserSelect } from "../../components/user-select";
 
 export interface IUser {
-  id: string;
+  id: number;
   name: string;
   email: string;
   title: string;
@@ -12,10 +14,7 @@ export interface IUser {
 
 interface ISearchPanelProps {
   users: IUser[];
-  param: {
-    name: string;
-    personId: string;
-  };
+  param: Partial<Pick<IProject, "name" | "personId">>;
   setParam: (param: ISearchPanelProps["param"]) => void;
 }
 
@@ -37,23 +36,16 @@ export const SearchPanel = ({ users, param, setParam }: ISearchPanelProps) => {
       </Form.Item>
 
       <Form.Item>
-        <Select
+        <UserSelect
+          defaultOptionName={"负责人"}
           value={param.personId}
-          style={{ width: 120 }}
           onChange={(value) =>
             setParam({
               ...param,
               personId: value,
             })
           }
-        >
-          <Select.Option value={""}>负责人</Select.Option>
-          {users.map((user) => (
-            <Select.Option key={user.id} value={String(user.id)}>
-              {user.name}
-            </Select.Option>
-          ))}
-        </Select>
+        />
       </Form.Item>
     </Form>
   );
