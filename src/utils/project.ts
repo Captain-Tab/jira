@@ -16,3 +16,39 @@ export const useProjects = (param?: Partial<IProject>) => {
 
   return result;
 };
+
+export const useEditProject = () => {
+  const { run, ...asyncResult } = useAsync();
+  const client = useHttp();
+  const mutate = (params: Partial<IProject>) => {
+    return run(
+      client(`projects/${params.id}`, {
+        // @ts-ignore
+        data: params,
+        method: "PATCH",
+      })
+    );
+  };
+  return {
+    mutate,
+    asyncResult,
+  };
+};
+
+export const useAddEditProject = () => {
+  const { run, ...asyncResult } = useAsync();
+  const client = useHttp();
+  const mutate = (params: Partial<IProject>) => {
+    return run(
+      client(`projects/${params.id}`, {
+        // @ts-ignore
+        data: params,
+        method: "POST",
+      })
+    );
+  };
+  return {
+    mutate,
+    asyncResult,
+  };
+};
